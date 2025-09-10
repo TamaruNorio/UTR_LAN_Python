@@ -414,7 +414,7 @@ def main():
 
     for _ in range(repeat_count):
         start_time = time.time()
-        received_data_bytes = communicate(session, COMMANDS['UHF_INVENTORY'])
+        received_data_bytes = communicate(session, COMMANDS['UHF_INVENTORY'], timeout=3.0)
         pc_uii_data_list, rssi_list, expected_read_count = received_data_parse(received_data_bytes)
         read_time = time.time() - start_time
 
