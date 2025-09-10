@@ -20,7 +20,7 @@ Python 3.10+ / Windows 10+ で動作確認想定
 
 【前提】
 - LAN モデル（TCP サーバーモード）に対して、上位機器（本プログラム）が TCP クライアントとして接続。
-- 既定のポート例: 4001（装置・設定により異なる場合があります）
+- 既定のポート例: 9004（装置・設定により異なる場合があります）
 """
 
 import sys
@@ -64,7 +64,7 @@ COMMANDS = {
 }
 
 # =============================================================================
-#  ユーティリティ（SUM 計算/検証、NACK解析、RSSI計算 等）
+#  ユーティリティ（SUM 計算/検証、NACK解析、RSSI値計算 等）
 # =============================================================================
 def calculate_sum_value(data: bytes) -> int:
     """STX〜ETX までの合計値(下位1バイト)を算出して返す。"""
@@ -307,9 +307,9 @@ def save_results_to_file(filename: str, total_iterations: int, total_read_time: 
 def main():
     # --- 接続情報の入力 ---
     print("UTR（LANモデル）に接続します。")
-    host = input("装置の IP アドレスを入力してください（例: 192.168.0.10）: ").strip()
-    port_text = input("TCP ポート番号を入力してください（未入力なら 4001 を使用）: ").strip()
-    port = int(port_text) if port_text else 4001
+    host = input("装置の IP アドレスを入力してください（例: 192.168.0.1）: ").strip()
+    port_text = input("TCP ポート番号を入力してください（未入力なら 9004 を使用）: ").strip()
+    port = int(port_text) if port_text else 9004
 
     # --- セッション確立 ---
     session = TcpSession(host, port, timeout=1.0)
