@@ -33,6 +33,83 @@
     ```
     実行時プロンプトに従い、**IP アドレス** と **TCP ポート** を入力します。ポート未入力時は **9004** を使用します。指定回数のインベントリを実行し、結果とログを出力します。
 
+## 開発環境セットアップ
+
+開発・テスト用の依存関係をインストールします。
+
+```powershell
+py -m pip install -r requirements-dev.txt
+```
+
+pytest を実行します。
+
+```powershell
+py -m pytest
+```
+
+## mock TCPサーバーの使い方
+
+UTRリーダライタ実機の代わりに、localhost 上で mock TCPサーバーを起動できます。
+
+one-tag シナリオ:
+
+```powershell
+py tools/mock_utr_tcp_server.py --scenario one-tag
+```
+
+no-tag シナリオ:
+
+```powershell
+py tools/mock_utr_tcp_server.py --scenario no-tag
+```
+
+停止する場合は、起動中の PowerShell で `Ctrl + C` を押します。
+
+## mockクライアントの使い方
+
+mock TCPサーバーを起動した状態で、別の PowerShell から mockクライアントを実行します。
+
+```powershell
+py tools/mock_client_check.py
+```
+
+この確認では、以下の流れを確認できます。
+
+1. ROMバージョン確認コマンド送信
+2. ACK応答受信、ROM文字列解析
+3. RAM指定のコマンドモード設定コマンド送信
+4. ACK応答受信
+5. UHF_Inventory コマンド送信
+6. one-tag / no-tag シナリオの応答受信
+7. 送信HEX、受信HEX、解析結果の表示
+
+## 実機確認前の方針
+
+実機確認の前に、まず UTRRWManager で以下を確認します。
+
+1. TCP/IP接続確認
+2. ROMバージョン読み取り
+3. Inventory 1回
+4. 送受信ログの TX / RX 保存
+5. Pythonサンプルの TX / RX との比較
+
+通信コマンド仕様は `docs/protocol/` を正とします。
+UTRRWManager の送受信ログは、実機確認用および Pythonサンプルとの比較用の基準ログとして扱います。
+ただし、通信コマンド仕様の正は `docs/protocol/` とします。
+
+## 初期実機確認で禁止する操作
+
+初期実機確認では、以下の操作を行いません。
+
+- FLASH書き込み
+- FLASH初期化
+- RF出力設定変更
+- ブザー制御
+- LED&ブザー制御
+- 連続Inventory
+- リスタート
+- RFタグ書き込み系コマンド
+
 ### VS Code でのワンクリック実行（推奨設定）
 
 `.vscode/launch.json` に以下を保存してください（**debugpy**使用）。
@@ -94,4 +171,3 @@ UTR_LAN_PYTHON/
 ## 変更履歴
 
 -   0.1.0 (2024-06-06): 初版。LAN受信のフレーム復元とInventory2最小動作を実装。
-
