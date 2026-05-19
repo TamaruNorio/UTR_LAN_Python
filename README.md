@@ -97,13 +97,39 @@ py tools/mock_client_check.py
 UTRRWManager の送受信ログは、実機確認用および Pythonサンプルとの比較用の基準ログとして扱います。
 ただし、通信コマンド仕様の正は `docs/protocol/` とします。
 
+## 実機LAN確認ツールの使い方
+
+実機LAN確認には `tools/real_device_check.py` を使用します。
+
+```powershell
+py tools/real_device_check.py --host <実機IP> --port 9004
+```
+
+`--host` は必須です。デフォルトの実機IPは設定していません。
+
+`127.0.0.1` 以外へ接続する場合は、実行前に対象IP、ポート、実行内容、期待結果、ログ保存先、禁止操作が表示されます。内容を確認し、`YES` と入力した場合のみ接続を開始します。
+
+このツールで実行する処理は以下のみです。
+
+1. TCP接続確認
+2. ROMバージョン確認
+3. RAM指定のコマンドモード設定
+4. UHF_Inventory 1回
+5. ログ保存
+
+ログは `logs/real_device/` に保存されます。実機IPなどのネットワーク情報を含む可能性があるため、`logs/real_device/` はGit管理しないでください。
+
+実機確認前には、まず UTRRWManager で基準ログを取得し、UTRRWManager の TX/RX と Pythonサンプルの TX/RX を比較してください。
+
 ## 初期実機確認で禁止する操作
 
 初期実機確認では、以下の操作を行いません。
 
 - FLASH書き込み
 - FLASH初期化
+- FLASH設定復元
 - RF出力設定変更
+- 周波数設定変更
 - ブザー制御
 - LED&ブザー制御
 - 連続Inventory
