@@ -5,3 +5,7 @@ venv/
 .env
 *.log
 .vscode/
+
+# Real device check logs
+logs/real_device/
+
