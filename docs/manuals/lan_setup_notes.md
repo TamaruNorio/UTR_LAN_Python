@@ -10,6 +10,7 @@ LAN接続、LAN設定、TCP接続確認に関係する内容を整理する。
 - `docs/manuals/original/TDR-MNL-UTR-SUN02-8CH-103.pdf`
 - `docs/manuals/original/TDR-MNL-UTR-SUN02V-8CH-104.pdf`
 - `docs/manuals/original/TDR-MNL-TR3IFBTOOLV201-100.pdf`
+- `docs/manuals/original/TDR-MNL-UTRRWManagerV151-101.pdf`
 
 ## LAN対応機種
 
@@ -75,6 +76,7 @@ LAN接続、LAN設定、TCP接続確認に関係する内容を整理する。
 > 根拠: UTR-SUN02-4CH取扱説明書 第4章 4.2.2「LAN接続」本文p.14
 > 根拠: UTR-SUN02-8CH取扱説明書 第4章 4.2.2「LAN接続」本文p.13
 > 根拠: UTR-SUN02V-8CH取扱説明書 第4章 4.2.2「LAN接続」本文p.13
+> 根拠: UTRRWManager取扱説明書 第2章 2.4「TCP/IP で接続する」本文p.8
 
 ## LAN接続手順の概要
 
@@ -90,13 +92,29 @@ LAN接続、LAN設定、TCP接続確認に関係する内容を整理する。
 > 根拠: UTR-SUN02V-8CH取扱説明書 第4章 4.2.2「LAN接続」本文p.12-p.13
 > 根拠: TR3IFBTool取扱説明書 第2章 2.1.1「起動前の注意事項」本文p.6
 
+## UTRRWManagerでのTCP/IP接続確認
+
+1. UTRRWManagerを起動する。
+2. ダイアログが「シリアルポートのオープン」の場合は、`LANタイプに切り替え` を押す。
+3. リーダライタのIPアドレスとポート番号を入力する。
+4. `接続` を押す。
+5. 通信確立に成功した場合、送受信ログに動作モード読み取り、ROMバージョン読み取り等が表示される。
+6. 通信確立できない場合は `TCP/IP 接続中` が表示され、約10秒後に `NG： Port Open` が表示される。
+
+UTRRWManagerは実機確認用および正解ログ取得用の公式ユーティリティとして扱う。ただし、通信コマンド仕様の正は `docs/protocol/` とし、`[cmt]` は解析補助情報として扱う。
+
+> 根拠: UTRRWManager取扱説明書 第2章 2.4「TCP/IP で接続する」本文p.8-p.11
+> 根拠: UTRRWManager取扱説明書 第3章 3.1.1「コマンドモード」本文p.13
+
 ## UTRRWManager / TR3IFBTool の役割
 
-- UTRRWManagerは、インストール手順および簡易的な動作確認手順の説明で使用される。
+- UTRRWManagerは、実機確認用および正解ログ取得用の公式ユーティリティとして扱う。
+- UTRRWManagerの送受信ログから、対象コマンドごとに `[cmd]` / `[TX]` / `[RX]` / `[cmt]` を切り出し、Pythonサンプルの送受信HEXと比較する。
 - TR3IFBToolは、製品のインターフェース設定を確認・変更するために使用される。
 - TR3IFBToolの保存操作は製品設定の変更にあたるため、初期確認では原則として設定値の確認にとどめる。
 
 > 根拠: UTR-SUN02-4CH取扱説明書 第5章 5.3「ユーティリティツールの使用方法」本文p.21
+> 根拠: UTRRWManager取扱説明書 第3章 3.1.1「コマンドモード」本文p.13
 > 根拠: TR3IFBTool取扱説明書 第3章 3.2「設定画面の表示項目」本文p.13
 
 ## TCP接続確認時の注意
@@ -108,6 +126,7 @@ LAN接続、LAN設定、TCP接続確認に関係する内容を整理する。
 > 根拠: UTR-SUN02-4CH取扱説明書 第4章 4.2.2「LAN接続」本文p.14
 > 根拠: UTR-SUN02-8CH取扱説明書 第4章 4.2.2「LAN接続」本文p.13
 > 根拠: UTR-SUN02V-8CH取扱説明書 第4章 4.2.2「LAN接続」本文p.13
+> 根拠: UTRRWManager取扱説明書 第2章 2.4「TCP/IP で接続する」本文p.8-p.11
 
 ## 確認事項
 
@@ -116,3 +135,4 @@ LAN接続、LAN設定、TCP接続確認に関係する内容を整理する。
 - TODO: Python実装側のソケット受信タイムアウト値を確認する。
 - TODO: LANクライアントモードを扱う場合は、Python側の待受サーバー実装方針を別途検討する。
 - TODO: UTR-SUN02-8CHがTR3IFBTool取扱説明書の動作対象機器リストに明示されていない点を確認する。
+- TODO: UTRRWManagerで取得したTX/RXログの保存先命名ルールを決める。
