@@ -49,8 +49,16 @@ try {
         git pull
     }
 
-    Invoke-Step "delete local branch $Branch" {
-        git branch -d $Branch
+    git show-ref --verify --quiet "refs/heads/$Branch"
+    if ($LASTEXITCODE -eq 0) {
+        Invoke-Step "delete local branch $Branch" {
+            git branch -d $Branch
+        }
+    }
+    else {
+        Write-Host ""
+        Write-Host "== delete local branch $Branch =="
+        Write-Host "Local branch already deleted. Skipping branch delete."
     }
 
     $devCheckScript = Join-Path $PSScriptRoot "dev_check.ps1"
