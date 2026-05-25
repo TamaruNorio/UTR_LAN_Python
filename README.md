@@ -47,6 +47,29 @@ pytest を実行します。
 py -m pytest
 ```
 
+## 半自動チェック
+
+開発中の基本確認をまとめて実行します。
+
+```powershell
+.\scripts\dev_check.ps1
+```
+
+PR作成前の確認をまとめて表示します。
+
+```powershell
+.\scripts\git_preflight.ps1
+```
+
+PR本文テンプレートを表示、またはファイルへ保存します。
+
+```powershell
+.\scripts\pr_body.ps1
+.\scripts\pr_body.ps1 -OutputPath pr_body.md
+```
+
+これらのスクリプトは実機通信、`real_device_check.py`、`git push`、PR作成、mergeを自動実行しません。
+
 ## mock TCPサーバーの使い方
 
 UTRリーダライタ実機の代わりに、localhost 上で mock TCPサーバーを起動できます。
