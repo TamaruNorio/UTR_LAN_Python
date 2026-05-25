@@ -70,6 +70,16 @@ PR本文テンプレートを表示、またはファイルへ保存します。
 
 これらのスクリプトは実機通信、`real_device_check.py`、`git push`、PR作成、mergeを自動実行しません。
 
+PR作業の開始、公開準備、merge後の同期を補助します。
+
+```powershell
+.\scripts\new_task.ps1 -Branch codex/example-task
+.\scripts\publish_pr.ps1 -Message "Add PR helper scripts" -Title "Add PR helper scripts"
+.\scripts\sync_after_merge.ps1 -Branch codex/example-task
+```
+
+`publish_pr.ps1` は確認後に `git commit` と `git push` を実行します。PR作成とmergeは自動実行しません。
+
 ## mock TCPサーバーの使い方
 
 UTRリーダライタ実機の代わりに、localhost 上で mock TCPサーバーを起動できます。

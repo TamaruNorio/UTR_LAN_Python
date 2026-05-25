@@ -9,3 +9,6 @@ venv/
 # Real device check logs
 logs/real_device/
 
+# Temporary PR body
+pr_body.md
+
