@@ -35,8 +35,8 @@ try {
         git status --short
     }
 
-    Invoke-Check "py -m pytest" {
-        py -m pytest
+    Invoke-Check "py -m pytest tests" {
+        py -m pytest tests
     }
 
     $scanScript = Join-Path $PSScriptRoot ("sec" + "ret_scan.ps1")

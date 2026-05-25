@@ -18,6 +18,12 @@
 - `real_device_check.py` は実行しない。
 - `git commit`、`git push`、PR mergeは禁止。
 - pytest未実行を成功扱いしない。
+- `py` / `python` がPATHに存在しない場合は、Codex同梱Pythonの有無を確認してpytestを実行する。
+- Codex同梱Pythonの例: `C:\Users\tamaru\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe`
+- pytest実行例: `& 'C:\Users\tamaru\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m pytest tests -p no:cacheprovider --basetemp "$env:TEMP\utr_lan_pytest_tmp"`
+- pytestが実際に起動して完了した場合のみ「pytest成功」または「pytest失敗」と報告する。
+- それでも実行できない場合のみ「pytest未実行」とし、試したコマンドと失敗理由を明記する。
+- `logs/real_device/` は実機ログ保存用であり、pytest一時領域には使わない。
 - 不明な通信仕様は推測で実装しない。
 - 通信仕様に関わる変更が必要な場合は、根拠となる資料と確認事項を先に提示する。
 
